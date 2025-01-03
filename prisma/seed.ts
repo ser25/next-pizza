@@ -129,32 +129,21 @@ async function up() {
   await prisma.cart.createMany({
     data: [
       {
-        userId: 22,
+        userId: 1,
         totalAmount: 0,
         token: '11111',
       },
       {
-        userId: 23,
+        userId: 2,
         totalAmount: 0,
         token: '222222',
       },
     ],
   });
-
-  await prisma.cartItem.create({
-    data: {
-      productItemId: 1,
-      cartId: 1,
-      quantity: 2,
-      ingredients: {
-        connect: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      },
-    },
-  });
 }
 
 async function down() {
-  await prisma.$executeRaw`TRUNCATE TABLE "User" CASCADE`; // CASCADE це якщо зв'язана іші таюблиці з цим користувачом то треба теж видаляти їх
+  await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`; // CASCADE це якщо зв'язана іші таюблиці з цим користувачом то треба теж видаляти їх
   await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE`;
