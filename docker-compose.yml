@@ -1,0 +1,17 @@
+version: '3.9' # Версія Docker Compose
+
+services: # Опис сервісів
+  postgres: # Ім'я сервісу
+    image: postgres # Використовуваний образ PostgreSQL
+    container_name: my_postgres # Ім'я контейнера
+    environment: # Задаємо змінні середовища
+      POSTGRES_USER: myuser # Ім'я користувача
+      POSTGRES_PASSWORD: mypassword # Пароль
+      POSTGRES_DB: mydatabase # Ім'я бази даних
+    ports:
+      - '5432:5432' # Фіксуємо порт 5432
+    volumes: # Зберігання даних контейнера
+      - postgres_data:/var/lib/postgresql/data
+
+volumes: # Опис volume
+  postgres_data:
