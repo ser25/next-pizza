@@ -22,6 +22,9 @@ export const FIlters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading, onAddId, selectedIngredients } = useFilterIngredients();
   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
+  const [newItems, setNewItems] = React.useState<{ value: string; text: string }[]>([
+    { value: '123', text: '231' },
+  ]);
   const [prices, setPriceRange] = React.useState<PriceRange>({
     priceFrom: 0,
     priceTo: 1000,
@@ -30,12 +33,37 @@ export const FIlters: React.FC<Props> = ({ className }) => {
   const updatePrice = (name: keyof PriceRange, value: number) => {
     setPriceRange({ ...prices, [name]: value });
   };
+  const items =
+    selectedIngredients.size <= 0
+      ? ingredients.map(item => ({ value: String(item.id), text: item.name }))
+      : newItems;
 
-  const items = ingredients.map(item => ({ value: String(item.id), text: item.name }));
+  const ingredientsUp = () => {
+    const items = ingredients.map(item => ({ value: String(item.id), text: item.name }));
+    let removeElements: { value: string; text: string }[] = [];
+    selectedIngredients.forEach(item => {
+      items.find((el, index) => {
+        if (el.value === item) {
+          removeElements.push(el);
+        }
+      });
+    });
+    console.log({ removeElements, items });
+    const uniqueItems = Array.from(
+      new Set([...removeElements, ...items].map(item => item.value)),
+    ).map(value => {
+      return [...removeElements, ...items].find(item => item.value === value);
+    });
+    setNewItems(uniqueItems as { value: string; text: string }[]);
+  };
+
+  // React.useEffect(() => {
+  //   console.log({ sizes, pizzaTypes, prices, selectedIngredients });
+  // }, [sizes, pizzaTypes, prices, selectedIngredients]);
 
   React.useEffect(() => {
-    console.log({ sizes, pizzaTypes, prices, selectedIngredients });
-  }, [sizes, pizzaTypes, prices, selectedIngredients]);
+    ingredientsUp();
+  }, [selectedIngredients]);
 
   return (
     <div className={className}>
@@ -97,7 +125,7 @@ export const FIlters: React.FC<Props> = ({ className }) => {
           onValueChange={([priceFrom, priceTo]) => setPriceRange({ priceFrom, priceTo })}
         />
       </div>
-
+      {/* Інгредієнти */}
       <CheckboxFilterGroups
         title="Інгредієнти"
         name="ingredients"
