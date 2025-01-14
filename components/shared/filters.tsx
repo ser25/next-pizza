@@ -115,7 +115,13 @@ export const FIlters: React.FC<Props> = ({ className }) => {
           value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 1000]}
           onValueChange={updatePrice}
         />
+        {
+          <button className="text-primary mt-2" onClick={() => updatePrice([0, 1000])}>
+            Очистити ціну
+          </button>
+        }
       </div>
+
       {/* Інгредієнти */}
       <CheckboxFilterGroups
         title="Інгредієнти"
