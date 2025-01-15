@@ -6,7 +6,6 @@ export default async function Home() {
   const categories = await prisma.category.findMany({
     include: { products: { include: { items: true, ingredients: true } } },
   });
-  console.log(categories[0].products[0]);
   return (
     <>
       <Container className="mt-10">
@@ -38,8 +37,6 @@ export default async function Home() {
           </div>
         </div>
       </Container>
-
-      <div style={{ height: '3000px' }}></div>
     </>
   );
 }
