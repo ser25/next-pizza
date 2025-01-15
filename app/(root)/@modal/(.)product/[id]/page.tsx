@@ -16,5 +16,5 @@ export default async function ProductModal({ params: { id } }: { params: { id: s
     return notFound();
   }
 
-  return <div>111111111</div>;
+  return <div>{id}</div>;
 }
