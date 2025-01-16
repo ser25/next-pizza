@@ -1,11 +1,11 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { ProductCard } from './product-card';
 import { Title } from './title';
 import { useIntersection } from 'react-use';
-import { useCategoryStore } from '@/store/category';
+import { useCategoryStore } from '@/shared/store/category';
 
 interface Props {
   title: string;
@@ -15,7 +15,13 @@ interface Props {
   listClassName?: string;
 }
 
-export const ProductsGroupList: React.FC<Props> = ({ title, items, categoryId, className, listClassName }) => {
+export const ProductsGroupList: React.FC<Props> = ({
+  title,
+  items,
+  categoryId,
+  className,
+  listClassName,
+}) => {
   const setActiveCategoryId = useCategoryStore(state => state.setActiveId);
   const intersectionRef = React.useRef(null);
   const intersection = useIntersection(intersectionRef, {
