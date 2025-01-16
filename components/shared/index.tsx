@@ -7,3 +7,5 @@ export { TopBar } from './top-bar';
 export { FIlters } from './filters';
 export { FilterCheckbox } from './filter-checkbox';
 export { SearchInput } from './search-input';
+export { ChoosePizzaForm } from './choose-pizza-form';
+export * from './modals';
