@@ -1,7 +1,7 @@
 'use client';
 
-import { FilterCheckbox } from '@/components/shared/filter-checkbox';
-import { Input } from '@/components/ui/input';
+import { FilterCheckbox } from '@/shared/components/shared/filter-checkbox';
+import { Input } from '@/shared/components/ui/input';
 import { useFilters, useIngredients, useQueryFilters } from '@/shared/hooks';
 import React from 'react';
 import { CheckboxFilterGroups } from './checkbox-filter-groups';
