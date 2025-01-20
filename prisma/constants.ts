@@ -30,7 +30,7 @@ export const _ingredients = [
   {
     name: 'Сири чеддер і пармезан',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA69C1FE796',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA69C1FE796.png',
   },
   {
     name: 'Гострий перець халапеньйо',
@@ -40,47 +40,47 @@ export const _ingredients = [
   {
     name: 'Ніжне курча',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA5B328D35A',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA5B328D35A.png',
   },
   {
     name: 'Печериці',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA67259A324',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA67259A324.png',
   },
   {
     name: 'Шинка',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA61B9A8D61',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA61B9A8D61.png',
   },
   {
     name: 'Пікантна пепероні',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA6258199C3',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA6258199C3.png',
   },
   {
     name: 'Гостра чорізо',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA62D5D6027',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA62D5D6027.png',
   },
   {
     name: 'Мариновані огірочки',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A21DA51A81211E9EA89958D782B',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A21DA51A81211E9EA89958D782B.png',
   },
   {
     name: 'Свіжі томати',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA7AC1A1D67',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA7AC1A1D67.png',
   },
   {
     name: 'Червона цибуля',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA60AE6464C',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA60AE6464C.png',
   },
   {
     name: 'Соковиті ананаси',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A21DA51A81211E9AFA6795BA2A0',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A21DA51A81211E9AFA6795BA2A0.png',
   },
   {
     name: 'Італійські трави',
@@ -90,12 +90,12 @@ export const _ingredients = [
   {
     name: 'Солодкий перець',
     price: 59,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA63F774C1B',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A22FA54A81411E9AFA63F774C1B.png',
   },
   {
     name: 'Кубики бринзи',
     price: 79,
-    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA6B0FFC349',
+    imageUrl: '../assets/images/pizza-store/Ingredients/000D3A39D824A82E11E9AFA6B0FFC349.png',
   },
   {
     name: 'Мітболи',
