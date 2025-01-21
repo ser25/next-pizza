@@ -2,6 +2,8 @@ import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { Title } from './title';
 import { Button } from '../ui';
+import { pizzaTypes } from '@/shared/constants/pizza';
+import { GroupVariants } from './group-variants';
 
 interface Props {
   imageUrl: string;
@@ -39,13 +41,13 @@ export const ChooseProductForm: React.FC<Props> = ({
                 items={availableSizes}
                 value={String(size)}
                 onClick={(value) => setSize(Number(value) as PizzaSize)}
-              />
-    
-              <GroupVariants
-                items={pizzaTypes}
-                value={String(type)}
-                onClick={(value) => setType(Number(value) as PizzaType)}
               /> */}
+
+          {/* <GroupVariants
+            items={pizzaTypes}
+            // value={String(type)}
+            // onClick={(value) => setType(Number(value) as PizzaType)}
+          /> */}
         </div>
 
         <div className="bg-gray-50 p-5 rounded-md h-[420px] overflow-auto scrollbar mt-5">
