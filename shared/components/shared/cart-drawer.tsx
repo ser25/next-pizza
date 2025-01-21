@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 import {
@@ -12,6 +13,8 @@ import {
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/shared/lib';
 
 interface Props {
   className?: string;
@@ -28,7 +31,18 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
           </SheetTitle>
         </SheetHeader>
 
-        {/* {Items} */}
+        <div className="-mx-6 mt-5 overflow-auto flex-1">
+          <CartDrawerItem
+            id={1}
+            imageUrl={
+              'http://localhost:3000/assets/images/pizza-store/11EE7D61304FAF5A98A6958F2BB2D260.webp'
+            }
+            details={getCartItemDetails([{ name: 'Пепероні' }, { name: 'Сир' }], 2, 20)}
+            name={'Чорізо свіжий'}
+            price={404}
+            quantity={1}
+          />
+        </div>
 
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">
