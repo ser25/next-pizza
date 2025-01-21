@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 
 import { prisma } from '@/prisma/prisma-client';
 import { Container, Title, GroupVariants, PizzaImage } from '@/shared/components/shared';
