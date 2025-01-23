@@ -140,6 +140,18 @@ async function up() {
       },
     ],
   });
+
+  await prisma.cartItem.create({
+    data: {
+      id: 1,
+      cartId: 1,
+      productItemId: 1,
+      quantity: 2,
+      ingredients: {
+        connect: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      },
+    },
+  });
 }
 
 async function down() {
