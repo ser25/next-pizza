@@ -1,21 +1,14 @@
-import {
-  mapPizzaType,
-  PizzaSize,
-  pizzaSizes,
-  PizzaType,
-  pizzaTypes,
-} from '@/shared/constants/pizza';
+import { PizzaSize, PizzaType, pizzaTypes } from '@/shared/constants/pizza';
+import { usePizzaOptions } from '@/shared/hooks';
+import { getPizzaDetails } from '@/shared/lib';
 import { cn } from '@/shared/lib/utils';
 import { Ingredient, ProductItem } from '@prisma/client';
 import React from 'react';
-import { useSet } from 'react-use';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
 import { IngredientItem } from './ingredient-item';
 import { PizzaImage } from './pizza-image';
 import { Title } from './title';
-import { calcTotalPizzaPrice, getAvailablePizzaSizes, getPizzaDetails } from '@/shared/lib';
-import { usePizzaOptions } from '@/shared/hooks';
 
 interface Props {
   imageUrl: string;
@@ -23,10 +16,13 @@ interface Props {
   ingredients: Ingredient[];
   items: ProductItem[];
   loading?: boolean;
-  onSubmit?: (itemId: number, ingredients: number[]) => void;
+  onSubmit: (itemId: number, ingredients: number[]) => void;
   className?: string;
 }
-
+/**
+ * 
+  Форма вибору піци
+ */
 export const ChoosePizzaForm: React.FC<Props> = ({
   name,
   items,
@@ -36,8 +32,16 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onSubmit,
   className,
 }) => {
-  const { size, type, selectedIngredients, availableSizes, setSize, setType, addIngredient } =
-    usePizzaOptions(items);
+  const {
+    size,
+    type,
+    selectedIngredients,
+    availableSizes,
+    currentItemId,
+    setSize,
+    setType,
+    addIngredient,
+  } = usePizzaOptions(items);
 
   const { totalPrice, textDetails } = getPizzaDetails(
     type,
@@ -48,7 +52,9 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   );
 
   const handlerSubmit = () => {
-    console.log('handlerSubmit', { size, type, selectedIngredients });
+    if (currentItemId) {
+      onSubmit(currentItemId, Array.from(selectedIngredients));
+    }
   };
   return (
     <div className={cn(className, 'flex flex-1')}>
@@ -88,7 +94,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         </div>
 
         <Button
-          // loading={loading}
+          loading={loading}
           onClick={handlerSubmit}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >

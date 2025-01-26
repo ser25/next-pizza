@@ -28,7 +28,6 @@ export const FIlters: React.FC<Props> = ({ className }) => {
 
   const ingredientsUp = () => {
     const items = ingredients.map(item => ({ value: String(item.id), text: item.name }));
-    console.log('123', items);
     let removeElements: { value: string; text: string }[] = [];
     filters.selectedIngredients.forEach(item => {
       items.find((el, index) => {

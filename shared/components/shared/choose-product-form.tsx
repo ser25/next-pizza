@@ -8,19 +8,27 @@ import { GroupVariants } from './group-variants';
 interface Props {
   imageUrl: string;
   name: string;
-  loading?: boolean;
-  onSubmit?: (itemId: number, ingredients: number[]) => void;
+  price: number;
+  onSubmit: () => void;
   className?: string;
+  loading?: boolean;
 }
 
+/**
+ * 
+  Форма вибору продукту
+ */
 export const ChooseProductForm: React.FC<Props> = ({
   name,
   imageUrl,
-  loading,
+  price,
   onSubmit,
   className,
+  loading,
 }) => {
-  const totalPrice = 100;
+  const handleClickAdd = () => {
+    onSubmit();
+  };
   return (
     <div className={cn(className, 'flex flex-1')}>
       <div className={'flex items-center justify-center flex-1 relative w-full'}>
@@ -34,7 +42,7 @@ export const ChooseProductForm: React.FC<Props> = ({
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />
 
-        <p className="text-gray-400">{'30 см, традиційне тісто 30, 590 г'}</p>
+        <p className="text-gray-400"></p>
 
         <div className="flex flex-col gap-4 mt-5">
           {/* <GroupVariants
@@ -66,11 +74,11 @@ export const ChooseProductForm: React.FC<Props> = ({
         </div>
 
         <Button
-          // loading={loading}
-          // onClick={handleClickAdd}
+          loading={loading}
+          onClick={handleClickAdd}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >
-          Добавить в корзину за {totalPrice} ₴
+          Добавить в корзину за {price} ₴
         </Button>
       </div>
     </div>

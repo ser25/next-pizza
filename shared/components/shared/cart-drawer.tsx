@@ -46,21 +46,22 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
 
         <div className="-mx-6 mt-5 overflow-auto flex-1">
           {items.map(items => (
-            <CartDrawerItem
-              key={items.id}
-              id={items.id}
-              imageUrl={items.imageUrl}
-              details={getCartItemDetails(
-                items.ingredients,
-                items.pizzaType as PizzaType,
-                items.pizzaSize as PizzaSize,
-              )}
-              name={items.name}
-              price={items.price}
-              quantity={items.quantity}
-              onClickCountButton={type => onClickCountButton(items.id, items.quantity, type)}
-              onClickRemove={() => removeCartItem(items.id)}
-            />
+            <div key={items.id} className="mb-2">
+              <CartDrawerItem
+                id={items.id}
+                imageUrl={items.imageUrl}
+                details={getCartItemDetails(
+                  items.ingredients,
+                  items.pizzaType as PizzaType,
+                  items.pizzaSize as PizzaSize,
+                )}
+                name={items.name}
+                price={items.price}
+                quantity={items.quantity}
+                onClickCountButton={type => onClickCountButton(items.id, items.quantity, type)}
+                onClickRemove={() => removeCartItem(items.id)}
+              />
+            </div>
           ))}
         </div>
 
