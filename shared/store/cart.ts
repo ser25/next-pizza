@@ -13,13 +13,13 @@ export interface CartState {
   fetchCartItems: () => Promise<void>;
 
   /* Запит на оновлення кількості товару*/
-  updateItemQuantity: (id: number, quantity: number) => void;
+  updateItemQuantity: (id: number, quantity: number) => Promise<void>;
 
   /* Запит на додавання товару до кошика */
   addCartItem: (values: any) => void;
 
   /* Запит на видалення товару з кошика */
-  removeCartItem: (id: number) => void;
+  removeCartItem: (id: number) => Promise<void>;
 }
 
 export const useCartStore = create<CartState>()((set, get) => ({
@@ -31,7 +31,7 @@ export const useCartStore = create<CartState>()((set, get) => ({
   fetchCartItems: async () => {
     try {
       set({ loading: true, error: false });
-      const data = await API.cart.fetchCart();
+      const data = await API.cart.getCart();
       set(getCartDetails(data));
     } catch (error) {
       console.error(error);
@@ -42,7 +42,16 @@ export const useCartStore = create<CartState>()((set, get) => ({
   },
 
   updateItemQuantity: async (id: number, quantity: number) => {
-    return {};
+    try {
+      set({ loading: true, error: false });
+      const data = await API.cart.updateItemQuantity(id, quantity);
+      set(getCartDetails(data));
+    } catch (error) {
+      console.error(error);
+      set({ error: true });
+    } finally {
+      set({ loading: false });
+    }
   },
 
   addCartItem: async (values: any) => {
@@ -50,6 +59,15 @@ export const useCartStore = create<CartState>()((set, get) => ({
   },
 
   removeCartItem: async (id: number) => {
-    return {};
+    try {
+      set({ loading: true, error: false });
+      const data = await API.cart.removeCartItem(id);
+      set(getCartDetails(data));
+    } catch (error) {
+      console.error(error);
+      set({ error: true });
+    } finally {
+      set({ loading: false });
+    }
   },
 }));
