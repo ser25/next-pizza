@@ -1,16 +1,6 @@
 import { prisma } from '@/prisma/prisma-client';
-import {
-  ChooseProductForm,
-  Container,
-  GroupVariants,
-  PizzaImage,
-  Title,
-} from '@/shared/components/shared';
-import { ChoosePizzaForm } from '@/shared/components/shared/choose-pizza-form';
-import { ProductForm } from '@/shared/components/shared/product-form';
-import { useCartStore } from '@/shared/store';
+import { Container, ProductForm } from '@/shared/components/shared';
 import { notFound } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 export default async function ProductPage({ params: { id } }: { params: { id: string } }) {
   const product = await prisma.product.findFirst({

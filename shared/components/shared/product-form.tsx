@@ -8,10 +8,11 @@ import { ProductWithRelations } from '@/@types/prisma';
 
 interface Props {
   product: ProductWithRelations;
+  _onSubmit?: VoidFunction;
   className?: string;
 }
 
-export const ProductForm: React.FC<Props> = ({ product }) => {
+export const ProductForm: React.FC<Props> = ({ product, _onSubmit }) => {
   const { addCartItem, loading } = useCartStore(state => state);
   const firstItem = product.items[0];
   const isPizzaForm = Boolean(firstItem.pizzaType);
@@ -25,6 +26,8 @@ export const ProductForm: React.FC<Props> = ({ product }) => {
         ingredients,
       });
       toast.success(product.name + ' успішно додана до кошика');
+
+      _onSubmit?.();
     } catch (error) {
       console.error(error);
       toast.error('Помилка додавання товару до кошика');
