@@ -1,9 +1,9 @@
 import { prisma } from '@/prisma/prisma-client';
-import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'crypto';
 import { findOrCreateCart } from '@/shared/lib/find-or-create-cart';
-import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
 import { updateCartTotalAmount } from '@/shared/lib/update-cart-total-amount';
+import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
+import crypto from 'crypto';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
@@ -53,30 +53,21 @@ export async function POST(req: NextRequest) {
 
     const data = (await req.json()) as CreateCartItemValues;
 
-    const findCartItem = await prisma.cartItem.findFirst({
-      where: {
-        cartId: userCart.id,
-        productItemId: data.productItemId,
-        ingredients: {
-          every: {
-            id: { in: data.ingredients },
-          }, // 15:21:00.000 [Prisma] error: Error validating the query: 'every' filter is not supported for scalar fields. Scalar fields are fields that are not related to other records. You can use 'some' filter instead. Scalar fields are: id
-          some: {}, // Якщо масив пустий, то буде шукати всі товари без інгредієнтів. тут надо писати костиль щоб пофіксити, сама призма не працює правильно з every
-        },
-      },
-    });
+    const areArraysEqual = (arr1: number[], arr2: number[]): boolean => {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+      return arr1.every((value, index) => value === arr2[index]);
+    };
 
-    // Якщо товар був знайдений, робимо +1
-    if (findCartItem) {
+    const updateCartItem = async (id: number, quantity: number) => {
       await prisma.cartItem.update({
-        where: {
-          id: findCartItem.id,
-        },
-        data: {
-          quantity: findCartItem.quantity + 1,
-        },
+        where: { id },
+        data: { quantity: quantity + 1 },
       });
-    } else {
+    };
+
+    const createCartItem = async () => {
       await prisma.cartItem.create({
         data: {
           cartId: userCart.id,
@@ -85,6 +76,44 @@ export async function POST(req: NextRequest) {
           ingredients: { connect: data.ingredients?.map(id => ({ id })) },
         },
       });
+    };
+
+    // Пошук існуючого товару в корзині
+    const findCartItem = await prisma.cartItem.findMany({
+      where: {
+        cartId: userCart.id,
+        productItemId: data.productItemId,
+      },
+      include: {
+        ingredients: true,
+      },
+    });
+
+    if (findCartItem.length > 0) {
+      console.log('findCartItem', findCartItem);
+
+      let isUpdated = false;
+
+      // Перевірка наявності ідентичного товару з однаковими інгредієнтами
+      for (const item of findCartItem) {
+        const ingredientIds = item.ingredients.map(ingredient => ingredient.id);
+
+        if (areArraysEqual(ingredientIds, data.ingredients || [])) {
+          // console.log('Товар знайдено, оновлюємо кількість:', item.id);
+          await updateCartItem(item.id, item.quantity);
+          isUpdated = true;
+          break; // Виходимо з циклу, якщо оновили товар
+        }
+      }
+
+      // Якщо схожого товару немає, створюємо новий
+      if (!isUpdated) {
+        // console.log('Схожого товару немає, створюємо новий');
+        await createCartItem();
+      }
+    } else {
+      // console.log('Товар не знайдено, створюємо новий');
+      await createCartItem();
     }
 
     const updatedUserCart = await updateCartTotalAmount(token);
