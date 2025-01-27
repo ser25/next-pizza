@@ -60,7 +60,8 @@ export async function POST(req: NextRequest) {
         ingredients: {
           every: {
             id: { in: data.ingredients },
-          },
+          }, // 15:21:00.000 [Prisma] error: Error validating the query: 'every' filter is not supported for scalar fields. Scalar fields are fields that are not related to other records. You can use 'some' filter instead. Scalar fields are: id
+          some: {}, // Якщо масив пустий, то буде шукати всі товари без інгредієнтів. тут надо писати костиль щоб пофіксити, сама призма не працює правильно з every
         },
       },
     });
