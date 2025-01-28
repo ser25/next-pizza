@@ -1,5 +1,12 @@
-import { Container, Title, WhiteBlock } from '@/shared/components/shared';
-import { Input, Textarea } from '@/shared/components/ui';
+import {
+  CheckoutItem,
+  CheckoutItemDetails,
+  Container,
+  Title,
+  WhiteBlock,
+} from '@/shared/components/shared';
+import { Button, Input, Textarea } from '@/shared/components/ui';
+import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
   return (
@@ -9,7 +16,26 @@ export default function CheckoutPage() {
       <div className="flex gap-10">
         {/* Ліва частина */}
         <div className="flex flex-col gap-10 flex-1 mb-20">
-          <WhiteBlock title="1. Кошик">11222</WhiteBlock>
+          <WhiteBlock title="1. Кошик">
+            <div className="flex flex-col gap-5">
+              <CheckoutItem
+                id={1}
+                imageUrl={'../assets/images/pizza-store/11EE7D610CF7E265B7C72BE5AE757CA7.webp'}
+                details={'20 см, традиційна піца'}
+                name={'Сирна'}
+                price={510}
+                quantity={1}
+              />
+              <CheckoutItem
+                id={2}
+                imageUrl={'../assets/images/pizza-store/11EE7D610CF7E265B7C72BE5AE757CA7.webp'}
+                details={'20 см, традиційна піца'}
+                name={'Сирна'}
+                price={510}
+                quantity={1}
+              />
+            </div>
+          </WhiteBlock>
 
           <WhiteBlock title="2. Персональні дані">
             <div className="grid grid-cols-2 gap-5">
@@ -35,6 +61,39 @@ export default function CheckoutPage() {
               <span className="text-xl">Разом:</span>
               <span className="text-[34px] font-extrabold">1300 ₴</span>
             </div>
+
+            <CheckoutItemDetails
+              title={
+                <>
+                  <Package size={24} className="mr-1 text-gray-400" />
+                  Вартість товарів:
+                </>
+              }
+              value="1200 ₴"
+            />
+            <CheckoutItemDetails
+              title={
+                <>
+                  <Percent size={24} className="mr-1 text-gray-400" />
+                  Податок:
+                </>
+              }
+              value="1200 ₴"
+            />
+            <CheckoutItemDetails
+              title={
+                <>
+                  <Truck size={24} className="mr-1 text-gray-400" />
+                  Доставка:
+                </>
+              }
+              value="1200 ₴"
+            />
+
+            <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+              Перейти до оплати
+              <ArrowRight className="w-5 ml-2" />
+            </Button>
           </WhiteBlock>
         </div>
       </div>
