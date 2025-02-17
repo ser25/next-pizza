@@ -1,3 +1,4 @@
+import { CartState } from './../store/cart';
 import React from 'react';
 import { useCartStore } from '../store';
 import { CartStateItem } from '../lib/get-cart-details';
@@ -13,18 +14,10 @@ type ReturnProps = {
 };
 
 export const useCart = (): ReturnProps => {
-  const {
-    items,
-    loading,
-    totalAmount,
-    fetchCartItems,
-    addCartItem,
-    updateItemQuantity,
-    removeCartItem,
-  } = useCartStore(state => state);
+  const cartState = useCartStore(state => state);
   React.useEffect(() => {
-    fetchCartItems();
+    cartState.fetchCartItems();
   }, []);
 
-  return { items, loading, totalAmount, updateItemQuantity, removeCartItem, addCartItem };
+  return cartState;
 };
