@@ -20,4 +20,8 @@ export { CheckoutItemDetails } from './checkout-item-details';
 export { CheckoutItem } from './checkout-item';
 export { CheckoutItemSkeleton } from './checkout-item-skeleton';
 export { CheckoutSidebar } from './checkout-sidebar';
+export { RequiredSymbol } from './required-symbol';
+export { ErrorText } from './error-text';
+export { ClearButton } from './clear-button';
+export * from './form-components';
 export * from './modals';

@@ -3,6 +3,7 @@ import {
   CheckoutItem,
   CheckoutSidebar,
   Container,
+  FormInput,
   Title,
   WhiteBlock,
 } from '@/shared/components/shared';
@@ -54,7 +55,7 @@ export default function CheckoutPage() {
               <Input name="firstName" className="text-base" placeholder="Ім'я" />
               <Input name="lastName" className="text-base" placeholder="Прізвище" />
               <Input name="email" className="text-base" placeholder="E-Mail" />
-              <Input name="phone" className="text-base" placeholder="Телефон" />
+              <FormInput name="phone" className="text-base" placeholder="Телефон" />
             </div>
           </WhiteBlock>
 
