@@ -1,14 +1,24 @@
+'use client';
 import {
   CheckoutItem,
-  CheckoutItemDetails,
+  CheckoutSidebar,
   Container,
   Title,
   WhiteBlock,
 } from '@/shared/components/shared';
-import { Button, Input, Textarea } from '@/shared/components/ui';
-import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
+import { Input, Textarea } from '@/shared/components/ui';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { useCart } from '@/shared/hooks';
+import { getCartItemDetails } from '@/shared/lib';
 
 export default function CheckoutPage() {
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
+
+  const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+
   return (
     <Container className="mt-10">
       <Title text="Оформлення замовлення" className="font-extrabold mb-8 text-[36px]" />
@@ -18,22 +28,24 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-10 flex-1 mb-20">
           <WhiteBlock title="1. Кошик">
             <div className="flex flex-col gap-5">
-              <CheckoutItem
-                id={1}
-                imageUrl={'../assets/images/pizza-store/11EE7D610CF7E265B7C72BE5AE757CA7.webp'}
-                details={'20 см, традиційна піца'}
-                name={'Сирна'}
-                price={510}
-                quantity={1}
-              />
-              <CheckoutItem
-                id={2}
-                imageUrl={'../assets/images/pizza-store/11EE7D610CF7E265B7C72BE5AE757CA7.webp'}
-                details={'20 см, традиційна піца'}
-                name={'Сирна'}
-                price={510}
-                quantity={1}
-              />
+              {items.map(item => (
+                <CheckoutItem
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  imageUrl={item.imageUrl}
+                  details={getCartItemDetails(
+                    item.ingredients,
+                    item.pizzaType as PizzaType,
+                    item.pizzaSize as PizzaSize,
+                  )}
+                  price={item.price}
+                  quantity={item.quantity}
+                  disabled={item.disabled}
+                  onClickCountButton={type => onClickCountButton(item.id, item.quantity, type)}
+                  onClickRemove={() => removeCartItem(item.id)}
+                />
+              ))}
             </div>
           </WhiteBlock>
 
@@ -56,45 +68,7 @@ export default function CheckoutPage() {
 
         {/* Права частина */}
         <div className="w-[450px]">
-          <WhiteBlock className={'p-6 sticky top-4'}>
-            <div className="flex flex-col gap-1">
-              <span className="text-xl">Разом:</span>
-              <span className="text-[34px] font-extrabold">1300 ₴</span>
-            </div>
-
-            <CheckoutItemDetails
-              title={
-                <>
-                  <Package size={24} className="mr-1 text-gray-400" />
-                  Вартість товарів:
-                </>
-              }
-              value="1200 ₴"
-            />
-            <CheckoutItemDetails
-              title={
-                <>
-                  <Percent size={24} className="mr-1 text-gray-400" />
-                  Податок:
-                </>
-              }
-              value="1200 ₴"
-            />
-            <CheckoutItemDetails
-              title={
-                <>
-                  <Truck size={24} className="mr-1 text-gray-400" />
-                  Доставка:
-                </>
-              }
-              value="1200 ₴"
-            />
-
-            <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
-              Перейти до оплати
-              <ArrowRight className="w-5 ml-2" />
-            </Button>
-          </WhiteBlock>
+          <CheckoutSidebar totalAmount={totalAmount} />
         </div>
       </div>
     </Container>

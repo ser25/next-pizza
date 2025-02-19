@@ -27,6 +27,7 @@ interface Props {
 
 export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children, className }) => {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
+  const [redirecting, setRedirecting] = React.useState(false);
 
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
@@ -65,24 +66,22 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
           {totalAmount > 0 && (
             <>
               <div className="-mx-6 mt-5 overflow-auto flex-1">
-                {items.map(items => (
-                  <div key={items.id} className="mb-2">
+                {items.map(item => (
+                  <div key={item.id} className="mb-2">
                     <CartDrawerItem
-                      id={items.id}
-                      imageUrl={items.imageUrl}
+                      id={item.id}
+                      imageUrl={item.imageUrl}
                       details={getCartItemDetails(
-                        items.ingredients,
-                        items.pizzaType as PizzaType,
-                        items.pizzaSize as PizzaSize,
+                        item.ingredients,
+                        item.pizzaType as PizzaType,
+                        item.pizzaSize as PizzaSize,
                       )}
-                      disabled={items.disabled}
-                      name={items.name}
-                      price={items.price}
-                      quantity={items.quantity}
-                      onClickCountButton={type =>
-                        onClickCountButton(items.id, items.quantity, type)
-                      }
-                      onClickRemove={() => removeCartItem(items.id)}
+                      disabled={item.disabled}
+                      name={item.name}
+                      price={item.price}
+                      quantity={item.quantity}
+                      onClickCountButton={type => onClickCountButton(item.id, item.quantity, type)}
+                      onClickRemove={() => removeCartItem(item.id)}
                     />
                   </div>
                 ))}
@@ -99,8 +98,13 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
                     <span className="font-bold text-lg">{totalAmount} ₴</span>
                   </div>
 
-                  <Link href="/cart">
-                    <Button type="submit" className="w-full h-12 text-base">
+                  <Link href="/checkout">
+                    <Button
+                      onClick={() => setRedirecting(true)}
+                      loading={redirecting}
+                      type="submit"
+                      className="w-full h-12 text-base"
+                    >
                       Оформить заказ
                       <ArrowRight className="w-5 ml-2" />
                     </Button>
