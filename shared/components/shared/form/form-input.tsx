@@ -13,12 +13,17 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const FormInput: React.FC<Props> = ({ className, name, label, required, ...props }) => {
-  //   const {
-  //     register,
-  //     formState: { errors },
-  //     watch,
-  //     setValue,
-  //   } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useFormContext();
+  const value = watch(name);
+  const errorText = errors[name]?.message as string;
+
+  const clearValue = () => setValue(name, '', { shouldValidate: true });
+
   return (
     <div className={className}>
       {label && (
@@ -28,11 +33,11 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, .
       )}
 
       <div className="relative">
-        <Input className="h-12 text-md" {...props} />
+        <Input className="h-12 text-md" {...register(name)} {...props} />
 
-        <ClearButton />
+        {value && <ClearButton onClick={clearValue} />}
       </div>
-      <ErrorText text={"Поле є обов'язковим"} className="mt-2" />
+      {errorText && <ErrorText text={errorText} className="mt-2" />}
     </div>
   );
 };
