@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 
 export default function CheckoutPage() {
-  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
+  const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
 
   const form = useForm({
     resolver: zodResolver<CheckoutFormValues>(checkoutFormSchema),
@@ -47,18 +47,19 @@ export default function CheckoutPage() {
             <div className="flex flex-col gap-10 flex-1 mb-20">
               <CheckoutCart
                 items={items}
+                loading={loading}
                 onClickCountButton={onClickCountButton}
                 removeCartItem={removeCartItem}
               />
 
-              <CheckoutPersonalForm />
+              <CheckoutPersonalForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
 
-              <CheckoutAddressForm />
+              <CheckoutAddressForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
             </div>
 
             {/* Права частина */}
             <div className="w-[450px]">
-              <CheckoutSidebar totalAmount={totalAmount} />
+              <CheckoutSidebar totalAmount={totalAmount} loading={loading} />
             </div>
           </div>
         </form>
