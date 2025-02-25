@@ -1,7 +1,8 @@
 'use server';
-
 import { prisma } from '@/prisma/prisma-client';
+import { PayOrderTemplate } from '@/shared/components';
 import { CheckoutFormValues } from '@/shared/constants';
+import { sendEmail } from '@/shared/lib';
 import { OrderStatus } from '@prisma/client';
 import { cookies } from 'next/headers';
 
@@ -73,7 +74,17 @@ export const createOrder = async (data: CheckoutFormValues) => {
         cartId: userCart.id,
       },
     });
+
+    const paymentUrl = 'https://google.com';
+
+    await sendEmail(
+      data.email,
+      'Next Pizza / Сплатіть замовлення #' + order.id,
+      PayOrderTemplate({ orderId: order.id, totalAmount: order.totalAmount, paymentUrl }),
+    );
+
+    return paymentUrl;
   } catch (error) {
-    console.log(error);
+    console.log('[CreateOrder] Server error', error);
   }
 };
