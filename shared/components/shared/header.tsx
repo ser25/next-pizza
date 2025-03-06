@@ -1,18 +1,16 @@
 'use client';
 
 import { cn } from '@/shared/lib/utils';
-import React from 'react';
-import { Container } from './container';
 import Image from 'next/image';
-import { Button } from '../ui';
-import { User, ShoppingCart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { SearchInput } from './search-input';
-import { CartButton } from './cart-button';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
 import toast from 'react-hot-toast';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { CartButton } from './cart-button';
+import { Container } from './container';
+import { AuthModal } from './modals';
 import { ProfileButton } from './profile-button';
+import { SearchInput } from './search-input';
 
 interface Props {
   hasSearch?: boolean;
@@ -21,6 +19,8 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+  const [openAuthModal, setOpenAuthModal] = React.useState(false);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   React.useEffect(() => {
@@ -53,7 +53,8 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
         {/* Right */}
 
         <div className="flex items-center gap-3">
-          <ProfileButton />
+          <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
+          <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
           {hasCart && <CartButton />}
         </div>
       </Container>
