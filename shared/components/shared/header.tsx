@@ -11,6 +11,8 @@ import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
 import { useSearchParams, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { ProfileButton } from './profile-button';
 
 interface Props {
   hasSearch?: boolean;
@@ -51,10 +53,7 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
         {/* Right */}
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-1">
-            <User size={16} />
-            Войти
-          </Button>
+          <ProfileButton />
           {hasCart && <CartButton />}
         </div>
       </Container>
