@@ -3,7 +3,7 @@ import { prisma } from '@/prisma/prisma-client';
 import { PayOrderTemplate } from '@/shared/components';
 import { CheckoutFormValues } from '@/shared/constants';
 import { createPayment, sendEmail } from '@/shared/lib';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
 import { cookies } from 'next/headers';
 
 export const createOrder = async (data: CheckoutFormValues) => {
@@ -103,3 +103,5 @@ export const createOrder = async (data: CheckoutFormValues) => {
     console.log('[CreateOrder] Server error', error);
   }
 };
+
+export async function updateUserInfo(body: Prisma.UserUpdateInput) {}

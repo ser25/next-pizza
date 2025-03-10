@@ -25,6 +25,8 @@ export { ErrorText } from './error-text';
 export { ClearButton } from './clear-button';
 export { Providers } from './providers';
 export { ProfileButton } from './profile-button';
+export { InfoBlock } from './info-block';
+export { ProfileForm } from './profile-form';
 export * from './checkout';
 export * from './email-template';
 export * from './form';
