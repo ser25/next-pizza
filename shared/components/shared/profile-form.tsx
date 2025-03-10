@@ -11,6 +11,7 @@ import { Container } from './container';
 import { Title } from './title';
 import { FormInput } from './form';
 import { Button } from '../ui';
+import { updateUserInfo } from '@/app/actions';
 // import { updateUserInfo } from '@/app/actions';
 
 interface Props {
@@ -30,11 +31,11 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 
   const onSubmit = async (data: TFormRegisterValues) => {
     try {
-      //   await updateUserInfo({
-      //     email: data.email,
-      //     fullName: data.fullName,
-      //     password: data.password,
-      //   });
+      await updateUserInfo({
+        email: data.email,
+        fullName: data.fullName,
+        password: data.password,
+      });
 
       toast.error('Данные обновлены 📝', {
         icon: '✅',

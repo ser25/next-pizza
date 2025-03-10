@@ -3,7 +3,9 @@ import { prisma } from '@/prisma/prisma-client';
 import { PayOrderTemplate } from '@/shared/components';
 import { CheckoutFormValues } from '@/shared/constants';
 import { createPayment, sendEmail } from '@/shared/lib';
+import { getUserSession } from '@/shared/lib/get-user-session';
 import { OrderStatus, Prisma } from '@prisma/client';
+import { hashSync } from 'bcrypt';
 import { cookies } from 'next/headers';
 
 export const createOrder = async (data: CheckoutFormValues) => {
@@ -104,4 +106,31 @@ export const createOrder = async (data: CheckoutFormValues) => {
   }
 };
 
-export async function updateUserInfo(body: Prisma.UserUpdateInput) {}
+export async function updateUserInfo(body: Prisma.UserUpdateInput) {
+  try {
+    const currentUser = await getUserSession();
+    if (!currentUser) {
+      throw new Error('User not found');
+    }
+
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: Number(currentUser.id),
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: Number(currentUser.id),
+      },
+      data: {
+        fullName: body.fullName,
+        email: body.email,
+        password: body.password ? hashSync(body.password as string, 10) : findUser?.password,
+      },
+    });
+  } catch (error) {
+    console.log('[updateUserInfo] Server error', error);
+    throw error;
+  }
+}
