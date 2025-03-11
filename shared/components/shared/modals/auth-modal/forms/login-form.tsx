@@ -1,13 +1,12 @@
+import { Button } from '@/shared/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { formLoginSchema, TFormLoginValues } from './schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Title } from '../../../title';
-import { FormInput } from '../../../form';
-import { Button } from '@/shared/components';
 import toast from 'react-hot-toast';
-import { signIn } from 'next-auth/react';
-import { on } from 'events';
+import { FormInput } from '../../../form';
+import { Title } from '../../../title';
+import { formLoginSchema, TFormLoginValues } from './schemas';
 
 interface Props {
   onClose?: () => void;

@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client';
 import { UserRole } from '@prisma/client';
-import { compare, hashSync } from 'bcrypt';
+import { compare, hashSync } from 'bcryptjs';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
