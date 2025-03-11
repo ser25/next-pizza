@@ -20,7 +20,7 @@ import toast from 'react-hot-toast';
 export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false);
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart();
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
   const form = useForm({
     resolver: zodResolver<CheckoutFormValues>(checkoutFormSchema),
@@ -34,19 +34,19 @@ export default function CheckoutPage() {
     },
   });
 
-  // React.useEffect(() => {
-  //   async function fetchUserInfo() {
-  //     const data = await API.auth.getMe();
-  //     const [firstName, lastName] = data.fullName.split(' ');
+  React.useEffect(() => {
+    async function fetchUserInfo() {
+      const data = await API.auth.getMe();
+      const [firstName, lastName] = data.fullName.split(' ');
 
-  //     form.setValue('email', data.email);
-  //     form.setValue('firstName', firstName);
-  //     form.setValue('lastName', lastName);
-  //   }
-  //   if (session) {
-  //     fetchUserInfo();
-  //   }
-  // }, [session]);
+      form.setValue('email', data.email);
+      form.setValue('firstName', firstName);
+      form.setValue('lastName', lastName);
+    }
+    if (session) {
+      fetchUserInfo();
+    }
+  }, [session]);
 
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
