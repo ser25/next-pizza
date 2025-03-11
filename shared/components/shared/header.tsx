@@ -24,9 +24,18 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
   const searchParams = useSearchParams();
   const router = useRouter();
   React.useEffect(() => {
+    let toastMessage = '';
     if (searchParams.has('paid')) {
-      toast.success('Замовлення успішно оплачено');
-      router.push('/', { scroll: false });
+      toastMessage = 'Замовлення успішно оплачено';
+    }
+
+    if (searchParams.has('verified')) {
+      toastMessage = 'Пошту успішно підтверджено!';
+    }
+
+    if (toastMessage) {
+      toast.success(toastMessage);
+      router.replace('/');
     }
   }, []);
   return (
