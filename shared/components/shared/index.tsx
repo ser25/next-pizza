@@ -31,4 +31,5 @@ export { Stories } from './stories';
 export * from './checkout';
 export * from './email-template';
 export * from './form';
+export * from './dashboard';
 export * from './modals';
