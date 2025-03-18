@@ -1,4 +1,4 @@
-import { BarGraph, Container } from '@/shared/components';
+import { BarGraph, Container, RecentSales } from '@/shared/components';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components';
 
 export default function Overview() {
@@ -32,7 +32,12 @@ export default function Overview() {
           </CardContent>
         </Card>
       </div>
-      <BarGraph />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
+        <div className="col-span-4">
+          <BarGraph />
+        </div>
+        <RecentSales className="col-span-3 md:col-span-2" />
+      </div>
     </Container>
   );
 }
